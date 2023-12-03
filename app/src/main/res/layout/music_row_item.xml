@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="362dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="@string/sample_music_title" />
+
+        <ImageButton
+            android:id="@+id/remove_music"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:background="@android:color/transparent"
+            android:src="@drawable/music_remove"
+            android:contentDescription="@string/remove_music" />
+
+
+
+</LinearLayout>

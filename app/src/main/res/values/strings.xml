@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">sample-music</string>
+    <string name="sample_music_title">歌曲名-歌手</string>
+    <string name="remove_music">删除音乐</string>
+    <string name="music_list_title">播放列表</string>
+    <string name="music_num">(%1d)</string>
 </resources>

@@ -52,7 +52,8 @@ public abstract class MusicRoomDatabase :RoomDatabase(){
             musicDao.deleteAll()
             val music1 = Music(1,"周杰伦 - 告白气球","asset///music/周杰伦 - 告白气球_hires.flac")
             val music2 = Music(2,"YELL - 彼女がフラグを立てる理由 (她竖起旗帜的理由)","asset///music/YELL - 彼女がフラグを立てる理由 (她竖起旗帜的理由).flac")
-            musicDao.insertAll(music1,music2)
+            val music3 = Music(3,"榊原由依 (さかきばら ゆい) - My Wish Forever","asset///music/榊原由依 (さかきばら ゆい) - My Wish Forever.ogg")
+            musicDao.insertAll(music1,music2,music3)
         }
     }
 }

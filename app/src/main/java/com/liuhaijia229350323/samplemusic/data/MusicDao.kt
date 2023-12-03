@@ -19,7 +19,7 @@ interface MusicDao {
     suspend fun deleteAll()
     @Query("SELECT * FROM musics")
     fun getAll(): Flow<List<Music>>
-    @Query("")
+    @Query("SELECT * FROM musics WHERE id=(:id)")
     fun getMusicById(id:Int): Flow<Music>
 
 }
