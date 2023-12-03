@@ -29,10 +29,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         val isFragmentContainerEmpty = savedInstanceState == null
+//        if(isFragmentContainerEmpty){
+//            supportFragmentManager
+//                .beginTransaction()
+//                .add(R.id.fragmentContainer,MusicListFragment.newInstance())
+//                .commit()
+//        }
         if(isFragmentContainerEmpty){
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragmentContainer,MusicListFragment.newInstance())
+                .add(R.id.fragmentContainer,PlayerFragment.newInstance())
                 .commit()
         }
     }

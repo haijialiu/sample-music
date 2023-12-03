@@ -14,13 +14,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.liuhaijia229350323.samplemusic.data.Music
 import com.liuhaijia229350323.samplemusic.data.MusicRepository
+import com.liuhaijia229350323.samplemusic.databinding.FragmentMusicListBinding
 
 private const val TAG = "MusicListFragment"
 
 class MusicListFragment : Fragment() {
+    private var _binding:FragmentMusicListBinding? =null
+    private val binding get() = _binding!!
+
     private lateinit var musicListRecyclerView: RecyclerView
     private lateinit var musicListViewModel: MusicListViewModel
     private lateinit var musicNumTextView: TextView
+
 
     companion object {
         fun newInstance() = MusicListFragment()
@@ -33,16 +38,20 @@ class MusicListFragment : Fragment() {
             this,
             MusicListViewModelFactory((activity?.application as SimpleMusicApplication).repository)
         )[MusicListViewModel::class.java]
-
+//        musicListViewModel = ViewModelProvider(requireActivity(),MusicListViewModelFactory((activity?.application as SimpleMusicApplication).repository))[MusicListViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_music_list, container, false)
+    ): View {
+        _binding = FragmentMusicListBinding.inflate(inflater,container,false)
+        val view = binding.root
         musicListRecyclerView = view.findViewById(R.id.music_list_recycler_view)
-        musicNumTextView = view.findViewById(R.id.music_num)
+        musicListRecyclerView = binding.musicListRecyclerView
+        musicNumTextView = binding.musicNumTextView
+
+
         val layoutManager = LinearLayoutManager(activity)
         musicListRecyclerView.layoutManager = layoutManager
         return view
@@ -52,13 +61,12 @@ class MusicListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         musicListViewModel.allMusics.observe(
-            viewLifecycleOwner,
-            Observer {
-                Log.d(TAG, "onViewCreated: get all music from database: $it")
-                musicListRecyclerView.adapter = MusicListAdapter(it)
-                musicNumTextView.text = getString(R.string.music_num, it.size)
-            }
-        )
+            viewLifecycleOwner
+        ) {
+            Log.d(TAG, "onViewCreated: get all music from database: $it")
+            musicListRecyclerView.adapter = MusicListAdapter(it)
+            musicNumTextView.text = getString(R.string.music_num, it.size)
+        }
     }
 
 
