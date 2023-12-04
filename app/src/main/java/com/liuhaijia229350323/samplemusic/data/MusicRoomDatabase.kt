@@ -50,10 +50,12 @@ public abstract class MusicRoomDatabase :RoomDatabase(){
 
         suspend fun initDatabase(musicDao: MusicDao){
             musicDao.deleteAll()
-            val music1 = Music(1,"YELL - 彼女がフラグを立てる理由 (她竖起旗帜的理由)","asset:///music/YELL - 彼女がフラグを立てる理由 (她竖起旗帜的理由).flac")
+            val music1 = Music(1,"Taylor Swift - I Knew You Were Trouble","asset:///music/Taylor Swift - I Knew You Were Trouble.flac")
+//            val music1 = Music(1,"YELL - 彼女がフラグを立てる理由 (她竖起旗帜的理由)","asset:///music/YELL - 彼女がフラグを立てる理由 (她竖起旗帜的理由).flac")
             val music2 = Music(2,"周杰伦 - 告白气球","asset:///music/周杰伦 - 告白气球_hires.flac")
             val music3 = Music(3,"榊原由依 (さかきばら ゆい) - My Wish Forever","asset:///music/榊原由依 (さかきばら ゆい) - My Wish Forever.ogg")
-            musicDao.insertAll(music1,music2,music3)
+            val music4 = Music(4,"Richard Clayderman - 秋日私语","asset:///music/Richard Clayderman - 秋日私语.flac")
+            musicDao.insertAll(music1,music2,music3,music4)
         }
     }
 }

@@ -9,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.media3.session.MediaController
+import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.SessionToken
 import androidx.media3.ui.PlayerView
 import com.google.common.util.concurrent.MoreExecutors
 import com.liuhaijia229350323.samplemusic.databinding.FragmentPlayerBinding
 import com.liuhaijia229350323.samplemusic.session.MusicPlaybackService
+import com.liuhaijia229350323.samplemusic.session.MusicService
 
 private const val TAG = "PlayerFragment"
 class PlayerFragment : Fragment() {
@@ -52,15 +54,14 @@ class PlayerFragment : Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-    }
 
     override fun onStart() {
         super.onStart()
         context?.apply {
-            val sessionToken = SessionToken(this, ComponentName(this, MusicPlaybackService::class.java))
+//            val sessionToken = SessionToken(this, ComponentName(this, MusicPlaybackService::class.java))
+            val sessionToken = SessionToken(this, ComponentName(this, MusicService::class.java))
+
             val controllerFuture = MediaController.Builder(this, sessionToken).buildAsync()
             controllerFuture.addListener(
                 {
@@ -69,22 +70,11 @@ class PlayerFragment : Fragment() {
                     // attached to the PlayerView UI component.
                     val controller = controllerFuture.get()
                     playerView.player = controller
-
                     Log.d(TAG, "onStart: this player is: $controller")
                 },
                 MoreExecutors.directExecutor()
+
             )
-//            val sessionToken = SessionToken(requireContext(), ComponentName(this, SimpleMusicService::class.java))
-//            val controllerFuture = MediaController.Builder(this, sessionToken).buildAsync()
-//            controllerFuture.addListener(
-//                {
-//                    // Call controllerFuture.get() to retrieve the MediaController.
-//                    // MediaController implements the Player interface, so it can be
-//                    // attached to the PlayerView UI component.
-//                    playerView.player = controllerFuture.get()
-//                },
-//                MoreExecutors.directExecutor()
-//            )
         }
 
     }

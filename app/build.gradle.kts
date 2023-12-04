@@ -17,16 +17,21 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
+    sourceSets {
+       named("main"){
+           java.srcDir("libs")
+       }
     }
+
+//    buildTypes {
+//        release {
+//            isMinifyEnabled = false
+//            proguardFiles(
+//                getDefaultProguardFile("proguard-android-optimize.txt"),
+//                "proguard-rules.pro"
+//            )
+//        }
+//    }
     viewBinding {
         enable = true
     }
@@ -41,8 +46,8 @@ android {
 }
 
 dependencies {
-    implementation("androidx.media3:media3-session:1.2.0")
     val roomVersion = "2.6.1"
+    val navVersion = "2.5.3"
 
 
 
@@ -51,9 +56,31 @@ dependencies {
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+    implementation("androidx.media3:media3-session:1.2.0")
     implementation("androidx.media3:media3-exoplayer:1.2.0")
     implementation("androidx.media3:media3-exoplayer-dash:1.2.0")
     implementation("androidx.media3:media3-ui:1.2.0")
+
+
+// https://mvnrepository.com/artifact/org.checkerframework/checker
+    implementation("org.checkerframework:checker:3.40.0")
+// https://mvnrepository.com/artifact/org.checkerframework/checker-qual
+    implementation("org.checkerframework:checker-qual:3.40.0")
+
+//    implementation("name:extension-ffmpeg-release.aar")
+
+//    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
+    implementation(files("libs/extension-ffmpeg-release.aar"))
+
+
+    // Kotlin
+    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+
+    // Feature module Support
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$navVersion")
+
+
 
 
 
@@ -75,6 +102,8 @@ dependencies {
     implementation("androidx.room:room-guava:$roomVersion")
     // optional - Test helpers
     testImplementation("androidx.room:room-testing:$roomVersion")
+    // Testing Navigation
+    androidTestImplementation("androidx.navigation:navigation-testing:$navVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

@@ -1,5 +1,6 @@
 package com.liuhaijia229350323.samplemusic
 
+import android.content.ComponentName
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -10,11 +11,16 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.lifecycle.Observer
+import androidx.media3.session.MediaController
+import androidx.media3.session.SessionToken
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.common.util.concurrent.MoreExecutors
 import com.liuhaijia229350323.samplemusic.data.Music
 import com.liuhaijia229350323.samplemusic.data.MusicRepository
 import com.liuhaijia229350323.samplemusic.databinding.FragmentMusicListBinding
+import com.liuhaijia229350323.samplemusic.session.MusicPlaybackService
+import com.liuhaijia229350323.samplemusic.session.MusicService
 
 private const val TAG = "MusicListFragment"
 
@@ -25,6 +31,7 @@ class MusicListFragment : Fragment() {
     private lateinit var musicListRecyclerView: RecyclerView
     private lateinit var musicListViewModel: MusicListViewModel
     private lateinit var musicNumTextView: TextView
+    private lateinit var controller: MediaController
 
 
     companion object {
@@ -39,6 +46,7 @@ class MusicListFragment : Fragment() {
             MusicListViewModelFactory((activity?.application as SimpleMusicApplication).repository)
         )[MusicListViewModel::class.java]
 //        musicListViewModel = ViewModelProvider(requireActivity(),MusicListViewModelFactory((activity?.application as SimpleMusicApplication).repository))[MusicListViewModel::class.java]
+
     }
 
     override fun onCreateView(
@@ -69,6 +77,27 @@ class MusicListFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        context?.apply {
+//            val sessionToken = SessionToken(this, ComponentName(this, MusicPlaybackService::class.java))
+            val sessionToken = SessionToken(this, ComponentName(this, MusicService::class.java))
+            val controllerFuture = MediaController.Builder(this, sessionToken).buildAsync()
+            controllerFuture.addListener(
+                {
+                    // Call controllerFuture.get() to retrieve the MediaController.
+                    // MediaController implements the Player interface, so it can be
+                    // attached to the PlayerView UI component.
+                    controller = controllerFuture.get()
+                    Log.d(TAG, "onStart: this player is: $controller")
+                },
+                MoreExecutors.directExecutor()
+
+            )
+
+
+        }
+    }
 
     private class MusicListAdapter(private val musics: List<Music>) :
         RecyclerView.Adapter<MusicListAdapter.MusicHolder>() {

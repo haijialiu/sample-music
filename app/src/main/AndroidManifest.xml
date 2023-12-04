@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Samplemusic"
         tools:targetApi="31">
-        <service android:name=".session.MusicPlaybackService"
+        <service android:name=".session.MusicService"
             android:foregroundServiceType="mediaPlayback"
             android:exported="true">
             <intent-filter>
