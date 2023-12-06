@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.media3.session.MediaController
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.SessionToken
 import androidx.media3.ui.PlayerView
+import androidx.navigation.findNavController
 import com.google.common.util.concurrent.MoreExecutors
 import com.liuhaijia229350323.samplemusic.databinding.FragmentPlayerBinding
 import com.liuhaijia229350323.samplemusic.session.MusicPlaybackService
@@ -26,6 +28,7 @@ class PlayerFragment : Fragment() {
     private lateinit var playerViewModel: PlayerViewModel
 
     private lateinit var playerView: PlayerView
+    private lateinit var playerBackImageButton: ImageButton
 
     companion object {
         fun newInstance() = PlayerFragment()
@@ -37,10 +40,6 @@ class PlayerFragment : Fragment() {
         musicListViewModel = ViewModelProvider(this,MusicListViewModelFactory((activity?.application as SimpleMusicApplication).repository))[MusicListViewModel::class.java]
         playerViewModel = ViewModelProvider(requireActivity())[PlayerViewModel::class.java]
         Log.d(TAG, "onCreate: playerViewModel: $playerViewModel")
-        //先有activity 初始化播放器，所以不做空检查
-
-
-
 
     }
 
@@ -50,7 +49,12 @@ class PlayerFragment : Fragment() {
     ): View {
         _binding = FragmentPlayerBinding.inflate(inflater,container,false)
         val view = binding.root
+        playerBackImageButton = binding.playerBack
         playerView = binding.playerView
+        playerBackImageButton.setOnClickListener {
+            view.findNavController().popBackStack()
+            Log.d(TAG, "onCreateView: player back")
+        }
         return view
     }
 

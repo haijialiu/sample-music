@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -20,6 +21,7 @@ android {
     sourceSets {
        named("main"){
            java.srcDir("libs")
+           jniLibs.srcDirs("libs")
        }
     }
 
@@ -48,8 +50,11 @@ android {
 dependencies {
     val roomVersion = "2.6.1"
     val navVersion = "2.5.3"
+    val activityVersion = "1.8.1"
+    val fragmentVersion = "1.6.1"
 
-
+    implementation("androidx.activity:activity-ktx:$activityVersion")
+    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -70,17 +75,18 @@ dependencies {
 //    implementation("name:extension-ffmpeg-release.aar")
 
 //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-    implementation(files("libs/extension-ffmpeg-release.aar"))
+//    implementation(files("libs/extension-ffmpeg-release.aar"))
 
 
     // Kotlin
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
+
     // Feature module Support
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$navVersion")
-
-
+    //permission request framework
+    implementation("com.github.getActivity:XXPermissions:18.5")
 
 
 
@@ -100,12 +106,15 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     // optional - Guava support for Room, including Optional and ListenableFuture
     implementation("androidx.room:room-guava:$roomVersion")
+    // Testing Fragments in Isolation
+    debugImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
     // optional - Test helpers
     testImplementation("androidx.room:room-testing:$roomVersion")
     // Testing Navigation
     androidTestImplementation("androidx.navigation:navigation-testing:$navVersion")
 
     testImplementation("junit:junit:4.13.2")
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }

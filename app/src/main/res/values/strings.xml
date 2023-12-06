@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">sample-music</string>
-    <string name="sample_music_title">歌曲名-歌手</string>
+    <string name="sample_music_title">%1s-%2s</string>
+    <string name="black_music_title">未选中歌曲</string>
     <string name="remove_music">删除音乐</string>
     <string name="music_list_title">播放列表</string>
     <string name="music_num">(%1d)</string>
     <string name="media3_controls_play_description">%1s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pause_and_play">播放/暂停</string>
+    <string name="index_img">专辑封面</string>
+    <string name="index">主页</string>
+    <string name="back">返    回</string>
 </resources>

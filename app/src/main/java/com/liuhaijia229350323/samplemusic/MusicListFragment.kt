@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.common.util.concurrent.MoreExecutors
@@ -31,7 +32,10 @@ class MusicListFragment : Fragment() {
     private lateinit var musicListRecyclerView: RecyclerView
     private lateinit var musicListViewModel: MusicListViewModel
     private lateinit var musicNumTextView: TextView
+
+
     private lateinit var controller: MediaController
+    private lateinit var backTextView: TextView
 
 
     companion object {
@@ -58,7 +62,11 @@ class MusicListFragment : Fragment() {
         musicListRecyclerView = view.findViewById(R.id.music_list_recycler_view)
         musicListRecyclerView = binding.musicListRecyclerView
         musicNumTextView = binding.musicNumTextView
+        backTextView = binding.backTextView
 
+        backTextView.setOnClickListener(View.OnClickListener {
+            view.findNavController().popBackStack()
+        })
 
         val layoutManager = LinearLayoutManager(activity)
         musicListRecyclerView.layoutManager = layoutManager
@@ -74,6 +82,7 @@ class MusicListFragment : Fragment() {
             Log.d(TAG, "onViewCreated: get all music from database: $it")
             musicListRecyclerView.adapter = MusicListAdapter(it)
             musicNumTextView.text = getString(R.string.music_num, it.size)
+
         }
     }
 

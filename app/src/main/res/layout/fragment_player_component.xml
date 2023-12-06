@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:layout_gravity="bottom"
+    tools:context=".PlayerComponentFragment">
+
+    <ImageView
+        android:id="@+id/music_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/index_img" />
+    <TextView
+        android:id="@+id/music_title"
+        android:layout_width="210dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/sample_music_title"/>
+
+    <ImageButton
+        android:id="@+id/music_controller"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:src="@drawable/play"
+        android:contentDescription="@string/pause_and_play" />
+
+    <ImageButton
+        android:id="@+id/music_list"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:src="@drawable/playlist_play"
+        android:contentDescription="@string/music_list_title" />
+
+
+</LinearLayout>

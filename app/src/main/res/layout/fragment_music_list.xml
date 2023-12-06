@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="500dp"
+    android:layout_gravity="bottom"
+
     android:orientation="vertical">
 
 
     <LinearLayout
+        android:id="@+id/music_list_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBaseline_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,9 +34,25 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/music_list_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="400dp"
         tools:context=".MusicListFragment"
+        tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/music_row_item">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/back_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/back"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </LinearLayout>
 </LinearLayout>

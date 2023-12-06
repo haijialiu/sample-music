@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class Music(
     @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "name") val musicName: String,
+//    @ColumnInfo(name = "media_id") val mediaId: String,
     @ColumnInfo(name = "uri") val musicUri: String
 )

@@ -4,3 +4,15 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
     id("com.google.devtools.ksp") version "1.9.0-1.0.13" apply false
 }
+buildscript{
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies{
+        val navVersion = "2.5.3"
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion")
+    }
+
+}
