@@ -226,7 +226,10 @@ class MainFragment : Fragment() {
                 controller.addMediaItems(playList)
                 controller.playWhenReady = false
                 if(!playList.isEmpty()) {
-                    updateMusicUi(playList[0])
+                    playList[0].mediaMetadata.let {
+                        updateMusicUi(it.artworkUri,it.title.toString(),it.artist.toString())
+                    }
+
                 }
                 Log.d(TAG, "pushRoot: ${viewModel.playItemMediaList}")
 
@@ -235,13 +238,16 @@ class MainFragment : Fragment() {
         )
     }
 
-    private fun updateMusicUi(mediaItem: MediaItem) {
-        musicImageView.setImageBitmap(getBitmap(mediaItem.mediaMetadata.artworkUri))
-        musicTitleTextView.text = getString(R.string.sample_music_title,mediaItem.mediaMetadata.title,mediaItem.mediaMetadata.artist)
-    }
+
     private fun updateMusicUi(albumUri:Uri?,title:String?,artist:String?) {
         musicImageView.setImageBitmap(getBitmap(albumUri))
         musicTitleTextView.text = getString(R.string.sample_music_title,title?:"",artist?:"")
+        val newIcon: Drawable? = if (controller.playWhenReady) {
+            ContextCompat.getDrawable(requireContext(), R.drawable.pause)
+        } else {
+            ContextCompat.getDrawable(requireContext(), R.drawable.play)
+        }
+        musicControlButton.setImageDrawable(newIcon)
     }
 
 

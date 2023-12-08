@@ -164,6 +164,13 @@ class MusicListFragment : Fragment() {
                     }
                     mediaBrowser.addListener(object : Player.Listener {
 
+                        override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
+                            updatePlayList()
+                        }
+
+                        override fun onPlaybackStateChanged(playbackState: Int) {
+                            updatePlayList()
+                        }
                         override fun onEvents(player: Player, events: Player.Events) {
                             updatePlayList()
                         }
@@ -191,6 +198,8 @@ class MusicListFragment : Fragment() {
                     Log.d(
                         TAG, "titleView: ${titleView.text} click"
                     )
+                    controller.setMediaItems(musics,layoutPosition,0)
+                    //notify main fragment update ui
                     
                 })
                 removeButton.setOnClickListener(View.OnClickListener {
