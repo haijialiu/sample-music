@@ -6,8 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "musics")
 data class Music(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
     @ColumnInfo(name = "name") val musicName: String,
-//    @ColumnInfo(name = "media_id") val mediaId: String,
-    @ColumnInfo(name = "uri") val musicUri: String
+    @ColumnInfo(name = "media_id") val mediaId: Long = 0,
+    @ColumnInfo(name = "uri") val musicUri: String = "",
+    @ColumnInfo(name = "media_item_id") var musicItemId: String? = ""
 )

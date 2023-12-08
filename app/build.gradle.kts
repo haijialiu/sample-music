@@ -76,7 +76,7 @@ dependencies {
 
 //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
 //    implementation(files("libs/extension-ffmpeg-release.aar"))
-
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // Kotlin
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")

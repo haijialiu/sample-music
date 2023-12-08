@@ -12,4 +12,6 @@
     <string name="index_img">专辑封面</string>
     <string name="index">主页</string>
     <string name="back">返    回</string>
+    <string name="load_local_music">加载本地音乐</string>
+    <string name="quit">退出</string>
 </resources>

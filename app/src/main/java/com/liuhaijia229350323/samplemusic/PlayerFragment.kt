@@ -14,6 +14,7 @@ import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.SessionToken
 import androidx.media3.ui.PlayerView
 import androidx.navigation.findNavController
+import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.liuhaijia229350323.samplemusic.databinding.FragmentPlayerBinding
 import com.liuhaijia229350323.samplemusic.session.MusicPlaybackService
@@ -29,6 +30,8 @@ class PlayerFragment : Fragment() {
 
     private lateinit var playerView: PlayerView
     private lateinit var playerBackImageButton: ImageButton
+
+    private lateinit var controllerFuture: ListenableFuture<MediaController>
 
     companion object {
         fun newInstance() = PlayerFragment()
@@ -59,14 +62,13 @@ class PlayerFragment : Fragment() {
     }
 
 
-
     override fun onStart() {
         super.onStart()
         context?.apply {
 //            val sessionToken = SessionToken(this, ComponentName(this, MusicPlaybackService::class.java))
             val sessionToken = SessionToken(this, ComponentName(this, MusicService::class.java))
 
-            val controllerFuture = MediaController.Builder(this, sessionToken).buildAsync()
+            controllerFuture = MediaController.Builder(this, sessionToken).buildAsync()
             controllerFuture.addListener(
                 {
                     // Call controllerFuture.get() to retrieve the MediaController.
@@ -77,10 +79,13 @@ class PlayerFragment : Fragment() {
                     Log.d(TAG, "onStart: this player is: $controller")
                 },
                 MoreExecutors.directExecutor()
-
             )
         }
 
+    }
+    override fun onStop() {
+        super.onStop()
+        MediaController.releaseFuture(controllerFuture)
     }
 
 

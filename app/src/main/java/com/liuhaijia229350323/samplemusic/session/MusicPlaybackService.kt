@@ -49,7 +49,6 @@ class MusicPlaybackService : MediaSessionService(){
         val defaultRenderersFactory= DefaultRenderersFactory(this).setExtensionRendererMode(EXTENSION_RENDERER_MODE_PREFER)
         player = ExoPlayer.Builder(this,defaultRenderersFactory)
 //        player = ExoPlayer.Builder(this)
-
             .build()
 
         Log.d(TAG, "onCreate: ${player.getRenderer(0)}")

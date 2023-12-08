@@ -11,4 +11,14 @@ class MusicRepository(private val musicDao: MusicDao) {
     suspend fun insert(music: Music){
         musicDao.insertAll(music)
     }
+
+    @WorkerThread
+    suspend fun deleteAllMusic(){
+        musicDao.deleteAll()
+    }
+
+    @WorkerThread
+    suspend fun deleteMusicByMediaItemId(id:String){
+        musicDao.deleteMusicByMediaId(id)
+    }
 }

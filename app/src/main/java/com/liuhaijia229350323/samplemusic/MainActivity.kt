@@ -6,6 +6,8 @@ import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.Manifest.permission.READ_MEDIA_VIDEO
 import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
 import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -21,8 +23,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.media3.session.MediaBrowser
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
+import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
@@ -35,11 +39,9 @@ private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
 
 
-    private val mediaSession: MediaSessionCompat? = null
-
-
     private lateinit var playerViewModel: PlayerViewModel
     private lateinit var controller: MediaController
+
 
     private val viewBinding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityMainBinding.inflate(layoutInflater)
@@ -52,66 +54,38 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-
-
         setContentView(viewBinding.root)
         playerViewModel = ViewModelProvider(this)[PlayerViewModel::class.java]
         Log.d(TAG, "onCreate: playerViewModel: $playerViewModel")
-//        imageButton = viewBinding.musicController
-//        imageButton.setOnClickListener(View.OnClickListener {
-//            controller.playWhenReady = !controller.playWhenReady
-//            val newIcon: Drawable? = if (controller.playWhenReady) {
-//                ContextCompat.getDrawable(this, R.drawable.pause)
-//            } else {
-//                ContextCompat.getDrawable(this, R.drawable.play)
-//            }
-//            imageButton.setImageDrawable(newIcon)
-//        })
+
 
     }
 
 
-    override fun onStart() {
-        super.onStart()
-//        XXPermissions.with(this)
-//            .permission(Permission.READ_MEDIA_AUDIO)
-//            .permission(Permission.NOTIFICATION_SERVICE)
-//            .request(object : OnPermissionCallback {
-//                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
-//                    if (!allGranted) {
-//                        Log.d(TAG, "onGranted: permission not all request")
-//                        return
-//                    }
-//                    Log.d(TAG, "onGranted: permission all request")
-//                    connectMusicService()
-//                }
-//
-//                override fun onDenied(permissions: MutableList<String>, doNotAskAgain: Boolean) {
-//                    if (doNotAskAgain) {
-//                        Log.d(TAG, "onDenied: do Not Ask Again")
-//                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
-//                        //XXPermissions.startPermissionActivity(this, permissions)
-//                    } else {
-//                        Log.d(TAG, "onDenied: request failed")
-//                    }
-//                }
-//            })
 
-    }
     fun connectMusicService(){
         val sessionToken = SessionToken(this, ComponentName(this, MusicService::class.java))
         val controllerFuture = MediaController.Builder(this, sessionToken).buildAsync()
         controllerFuture.addListener(
             {
-                // Call controllerFuture.get() to retrieve the MediaController.
-                // MediaController implements the Player interface, so it can be
-                // attached to the PlayerView UI component.
+
                 controller = controllerFuture.get()
 
             },
             MoreExecutors.directExecutor()
 
         )
+    }
+
+    // Remember to release the player and media session in onDestroy
+    override fun onDestroy() {
+        Log.d(TAG, "onDestroy: main activity is destroy")
+        super.onDestroy()
+        val intent = Intent(this,MusicService::class.java).apply {
+
+        }
+        stopService(intent)
+//        android.os.Process.killProcess(android.os.Process.myPid())
     }
 
 

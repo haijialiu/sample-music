@@ -27,9 +27,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Samplemusic"
         tools:targetApi="31">
+        <meta-data
+            android:name="ScopedStorage"
+            android:value="true" />
+
         <service android:name=".session.MusicService"
             android:foregroundServiceType="mediaPlayback"
-            android:exported="true">
+            android:exported="true"
+            android:permission="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK">
             <intent-filter>
                 <action android:name="androidx.media3.session.MediaSessionService"/>
                 <action android:name="android.media.browse.MediaBrowserService"/>
